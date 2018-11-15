@@ -1,3 +1,13 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MainWindow.xaml](./CS/DevExpress.Example01/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/DevExpress.Example01/MainWindow.xaml))
+* [MainWindow.xaml.cs](./CS/DevExpress.Example01/MainWindow.xaml.cs) (VB: [MainWindow.xaml](./VB/DevExpress.Example01/MainWindow.xaml))
+* [SearchBehavior.cs](./CS/DevExpress.Example01/SearchBehavior/SearchBehavior.cs) (VB: [SearchBehavior.vb](./VB/DevExpress.Example01/SearchBehavior/SearchBehavior.vb))
+* [SearchWindow.xaml](./CS/DevExpress.Example01/SearchBehavior/SearchWindow.xaml) (VB: [SearchWindow.xaml](./VB/DevExpress.Example01/SearchBehavior/SearchWindow.xaml))
+* [SearchWindow.xaml.cs](./CS/DevExpress.Example01/SearchBehavior/SearchWindow.xaml.cs) (VB: [SearchWindow.xaml](./VB/DevExpress.Example01/SearchBehavior/SearchWindow.xaml))
+* [Task.cs](./CS/DevExpress.Example01/Task.cs) (VB: [Task.vb](./VB/DevExpress.Example01/Task.vb))
+<!-- default file list end -->
 # How to create Search Window with Find Previous and Find Next buttons in GridControl
 
 
