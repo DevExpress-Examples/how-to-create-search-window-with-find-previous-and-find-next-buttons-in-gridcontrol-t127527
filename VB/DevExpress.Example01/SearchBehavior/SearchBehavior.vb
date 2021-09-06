@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic
-Imports DevExpress.Mvvm
+﻿Imports DevExpress.Mvvm
 Imports DevExpress.Mvvm.UI.Interactivity
 Imports DevExpress.Xpf.Grid
 Imports System.Windows

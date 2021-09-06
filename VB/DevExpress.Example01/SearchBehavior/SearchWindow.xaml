@@ -1,4 +1,4 @@
-<dx:DXWindow x:Class="DevExpress.Example01.SearchBehavior.SearchWindow"
+﻿<dx:DXWindow x:Class="DevExpress.Example01.SearchBehavior.SearchWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" ResizeMode="NoResize"
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"

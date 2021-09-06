@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic
-Imports DevExpress.Mvvm
+﻿Imports DevExpress.Mvvm
 Imports DevExpress.Xpf.Core
 Imports DevExpress.Xpf.Grid
 Imports System
@@ -24,25 +23,9 @@ Namespace DevExpress.Example01.SearchBehavior
 				Me.Column = column
 			End Sub
 
-			Private privateRowHandle As Integer
 			Public Property RowHandle() As Integer
-				Get
-					Return privateRowHandle
-				End Get
-				Set(ByVal value As Integer)
-					privateRowHandle = value
-				End Set
-			End Property
 
-			Private privateColumn As ColumnBase
 			Public Property Column() As ColumnBase
-				Get
-					Return privateColumn
-				End Get
-				Set(ByVal value As ColumnBase)
-					privateColumn = value
-				End Set
-			End Property
 		End Class
 
 		#End Region ' Classes
@@ -55,9 +38,9 @@ Namespace DevExpress.Example01.SearchBehavior
 			Me._Grid = gridControl
 			InitializeComponent()
 			Me.DataContext = Me
-			AddHandler Me.Activated, AddressOf WindowActivated
+			AddHandler Me.Activated, AddressOf Me.WindowActivated
 			AddHandler Me.IsVisibleChanged, AddressOf ThisIsVisibleChanged
-			AddHandler Me._Grid.FilterChanged, AddressOf GridFilterChanged
+			AddHandler _Grid.FilterChanged, AddressOf GridFilterChanged
 			AddHandler ThemeManager.ThemeChanged, AddressOf ThemeChanged
 		End Sub
 
@@ -209,7 +192,7 @@ Namespace DevExpress.Example01.SearchBehavior
 
 		#Region "Events"
 
-		Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+		Public Event PropertyChanged As PropertyChangedEventHandler
 
 		#End Region ' Events
 
@@ -218,8 +201,9 @@ Namespace DevExpress.Example01.SearchBehavior
 		Protected Sub Search()
 			Me._FoundCells.Clear()
 			Me._CurrentCell = 0
-			Dim searchText As String = Me.SearchText.ToLower()
-			If Not(TypeOf Me._Grid.View Is TableView) Then
+'INSTANT VB NOTE: The variable searchText was renamed since Visual Basic does not handle local variables named the same as class members well:
+			Dim searchText_Conflict As String = Me.SearchText.ToLower()
+			If Not (TypeOf Me._Grid.View Is TableView) Then
 				Return
 			End If
 
@@ -234,7 +218,7 @@ Namespace DevExpress.Example01.SearchBehavior
 			For Each rowHandle In rowHandles
 				For Each col In Me._Grid.Columns
 					Dim cellText = Me._Grid.GetCellDisplayText(rowHandle, col).ToLower()
-					If cellText.Contains(searchText) Then
+					If cellText.Contains(searchText_Conflict) Then
 						Me._FoundCells.Add(New CellNode(rowHandle, col))
 					End If
 				Next col
@@ -254,17 +238,19 @@ Namespace DevExpress.Example01.SearchBehavior
 		Protected Function GetDataRowHandles() As List(Of Integer)
 			Dim rowHandles As New List(Of Integer)()
 			Dim i As Integer = -1
-'INSTANT VB TODO TASK: Assignments within expressions are not supported in VB.NET
-'ORIGINAL LINE: while(++i < Me._Grid.VisibleRowCount)
-			Do While ++i < Me._Grid.VisibleRowCount
+			i += 1
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: while(++i < this._Grid.VisibleRowCount)
+			Do While i < Me._Grid.VisibleRowCount
 				Dim rowHandle As Integer = Me._Grid.GetRowHandleByVisibleIndex(i)
 				If Me._Grid.IsGroupRowHandle(rowHandle) Then
-					If (Not Me._Grid.IsGroupRowExpanded(rowHandle)) Then
+					If Not Me._Grid.IsGroupRowExpanded(rowHandle) Then
 						rowHandles.AddRange(GetDataRowHandlesInGroup(rowHandle))
 					End If
 				Else
 					rowHandles.Add(rowHandle)
 				End If
+				i += 1
 			Loop
 
 			Return rowHandles
@@ -273,15 +259,17 @@ Namespace DevExpress.Example01.SearchBehavior
 		Protected Function GetDataRowHandlesInGroup(ByVal groupRowHandle As Integer) As List(Of Integer)
 			Dim rowHandles As New List(Of Integer)()
 			Dim i As Integer = -1
-'INSTANT VB TODO TASK: Assignments within expressions are not supported in VB.NET
-'ORIGINAL LINE: while(++i < Me._Grid.GetChildRowCount(groupRowHandle))
-			Do While ++i < Me._Grid.GetChildRowCount(groupRowHandle)
+			i += 1
+'INSTANT VB WARNING: An assignment within expression was extracted from the following statement:
+'ORIGINAL LINE: while(++i < this._Grid.GetChildRowCount(groupRowHandle))
+			Do While i < Me._Grid.GetChildRowCount(groupRowHandle)
 				Dim rowHandle As Integer = Me._Grid.GetChildRowHandle(groupRowHandle, i)
 				If Me._Grid.IsGroupRowHandle(rowHandle) Then
 					rowHandles.AddRange(GetDataRowHandlesInGroup(rowHandle))
 				Else
 					rowHandles.Add(rowHandle)
 				End If
+				i += 1
 			Loop
 
 			Return rowHandles
@@ -298,9 +286,7 @@ Namespace DevExpress.Example01.SearchBehavior
 		End Sub
 
 		Protected Sub OnPropertyChanged(ByVal info As String)
-			If Me.PropertyChangedEvent IsNot Nothing Then
-				RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(info))
-			End If
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(info))
 		End Sub
 
 		#End Region ' Methods
