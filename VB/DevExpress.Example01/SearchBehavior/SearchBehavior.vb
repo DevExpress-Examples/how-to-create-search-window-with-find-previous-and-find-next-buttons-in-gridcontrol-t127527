@@ -1,4 +1,3 @@
-﻿Imports Microsoft.VisualBasic
 Imports DevExpress.Mvvm
 Imports DevExpress.Mvvm.UI.Interactivity
 Imports DevExpress.Xpf.Grid
@@ -7,68 +6,60 @@ Imports System.Windows.Input
 
 Namespace DevExpress.Example01.SearchBehavior
 
-	Public Class SearchBehavior
-		Inherits Behavior(Of GridControl)
+    Public Class SearchBehavior
+        Inherits Behavior(Of GridControl)
 
-		Protected _SearchWindow As SearchWindow
+        Protected _SearchWindow As SearchWindow
 
-		#Region "Commands"
+#Region "Commands"
+#Region "SearchCommand"
+        Protected _Search As DelegateCommand
 
-		#Region "SearchCommand"
+        Public ReadOnly Property Search As DelegateCommand
+            Get
+                If _Search Is Nothing Then
+                    _Search = New DelegateCommand(AddressOf SearchExecute)
+                End If
 
-		Protected _Search As DelegateCommand
+                Return _Search
+            End Get
+        End Property
 
-		Public ReadOnly Property Search() As DelegateCommand
-			Get
-				If Me._Search Is Nothing Then
-					Me._Search = New DelegateCommand(AddressOf Me.SearchExecute)
-				End If
+        Protected Sub SearchExecute()
+            If _SearchWindow Is Nothing Then
+                _SearchWindow = New SearchWindow(AssociatedObject)
+                _SearchWindow.Owner = Application.Current.MainWindow
+            End If
 
-				Return Me._Search
-			End Get
-		End Property
+            _SearchWindow.Show()
+        End Sub
 
-		Protected Sub SearchExecute()
-			If Me._SearchWindow Is Nothing Then
-				Me._SearchWindow = New SearchWindow(Me.AssociatedObject)
-				Me._SearchWindow.Owner = Application.Current.MainWindow
+#End Region  ' SearchCommand
+#Region "HideSearch"
+        Protected _HideSearch As DelegateCommand
 
-			End If
+        Public ReadOnly Property HideSearch As DelegateCommand
+            Get
+                If _HideSearch Is Nothing Then
+                    _HideSearch = New DelegateCommand(AddressOf HideSearchExecute)
+                End If
 
-			Me._SearchWindow.Show()
-		End Sub
+                Return _HideSearch
+            End Get
+        End Property
 
-		#End Region ' SearchCommand
+        Protected Sub HideSearchExecute()
+            If _SearchWindow IsNot Nothing Then
+                _SearchWindow.Close()
+            End If
+        End Sub
 
-		#Region "HideSearch"
-
-		Protected _HideSearch As DelegateCommand
-
-		Public ReadOnly Property HideSearch() As DelegateCommand
-			Get
-				If Me._HideSearch Is Nothing Then
-					Me._HideSearch = New DelegateCommand(AddressOf Me.HideSearchExecute)
-				End If
-
-				Return Me._HideSearch
-			End Get
-		End Property
-
-		Protected Sub HideSearchExecute()
-			If Me._SearchWindow IsNot Nothing Then
-				Me._SearchWindow.Close()
-			End If
-		End Sub
-
-		#End Region ' HideSearch
-
-		#End Region ' Commands
-
-		Protected Overrides Sub OnAttached()
-			MyBase.OnAttached()
-			Me.AssociatedObject.InputBindings.Add(New KeyBinding(Me.Search, New KeyGesture(Key.F, ModifierKeys.Control)))
-			Me.AssociatedObject.InputBindings.Add(New KeyBinding(Me.HideSearch, New KeyGesture(Key.Escape)))
-		End Sub
-
-	End Class
+#End Region  ' HideSearch
+#End Region  ' Commands
+        Protected Overrides Sub OnAttached()
+            MyBase.OnAttached()
+            AssociatedObject.InputBindings.Add(New KeyBinding(Search, New KeyGesture(Key.F, ModifierKeys.Control)))
+            AssociatedObject.InputBindings.Add(New KeyBinding(HideSearch, New KeyGesture(Key.Escape)))
+        End Sub
+    End Class
 End Namespace
