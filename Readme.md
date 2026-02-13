@@ -26,7 +26,7 @@ This example creates a Search window for the WPF GridControl. The Search window 
 
 * [Search Panel - WPF Data Grid](https://docs.devexpress.com/WPF/11402/controls-and-libraries/data-grid/filtering-and-searching/search)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=how-to-create-search-window-with-find-previous-and-find-next-buttons-in-gridcontrol-t127527&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=how-to-create-search-window-with-find-previous-and-find-next-buttons-in-gridcontrol-t127527&~~~was_helpful=no)
 
